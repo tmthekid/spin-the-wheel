@@ -76,22 +76,28 @@ class AppController extends Controller
     }
 
     public function saveWheel(){
-        $serial = Serial::find(request()->session()->pull('serial'))->first();
+        $serial = Serial::find(request()->session()->get('serial'));
         $value = Value::where('value', request()->value)->first();
         $code = $value->codes->where('status', true)->random();
         if($serial && $code->id) {
             $serial->update(['status' => false]);
             $serial->client()->create([
-                'full_name' => request()->session()->pull('client_name'),
-                'email' => request()->session()->pull('client_email'),
-                'phone' => request()->session()->pull('client_phone')
+                'full_name' => request()->session()->get('client_name'),
+                'email' => request()->session()->get('client_email'),
+                'phone' => request()->session()->get('client_phone')
             ]);  
             $serial->distributor()->create([
-                'full_name' => request()->session()->pull('distributor_name'),
-                'phone' => request()->session()->pull('distributor_phone')
+                'full_name' => request()->session()->get('distributor_name'),
+                'phone' => request()->session()->get('distributor_phone')
             ]);
             Code::where('id', $code->id)->update(['serial_id' => $serial->id, 'status' => false]);
             request()->session()->put('code', $code->code);
+            request()->session()->forget('serial');
+            request()->session()->forget('client_name');
+            request()->session()->forget('client_email');
+            request()->session()->forget('client_phone');
+            request()->session()->forget('distributor_name');
+            request()->session()->forget('distributor_phone');
             return response()->json(['data' => true]);
         } else {
             return response()->json(['data' => false]);

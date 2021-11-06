@@ -9,7 +9,7 @@
         @yield('styles')
     </head>
     <body class="antialiased">
-        <div class="w-full px-2 md:px-0 lg:w-1/3 absolute" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <div class="w-full px-2 md:px-0 lg:w-1/3" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
             @yield('content')
         </div>
         @yield('scripts')
