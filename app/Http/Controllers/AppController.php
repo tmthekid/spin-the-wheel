@@ -79,28 +79,33 @@ class AppController extends Controller
         $serial = Serial::find(request()->session()->get('serial'));
         $value = Value::where('value', request()->value)->first();
         $code = $value->codes->where('status', true)->random();
+        $client_name = request()->session()->get('client_name');
+        $client_email = request()->session()->get('client_email');
+        $client_phone = request()->session()->get('client_phone');
+        $distributor_name = request()->session()->get('distributor_name');
+        $distributor_phone = request()->session()->get('distributor_phone');
+        request()->session()->forget('serial');
+        request()->session()->forget('client_name');
+        request()->session()->forget('client_email');
+        request()->session()->forget('client_phone');
+        request()->session()->forget('distributor_name');
+        request()->session()->forget('distributor_phone');
         if($serial && $code->id) {
             $serial->update(['status' => false]);
             $serial->client()->create([
-                'full_name' => request()->session()->get('client_name'),
-                'email' => request()->session()->get('client_email'),
-                'phone' => request()->session()->get('client_phone')
+                'full_name' => $client_name,
+                'email' => $client_email,
+                'phone' => $client_phone
             ]);  
             $serial->distributor()->create([
-                'full_name' => request()->session()->get('distributor_name'),
-                'phone' => request()->session()->get('distributor_phone')
+                'full_name' => $distributor_name,
+                'phone' => $distributor_phone
             ]);
             Code::where('id', $code->id)->update(['serial_id' => $serial->id, 'status' => false]);
             request()->session()->put('code', $code->code);
-            request()->session()->forget('serial');
-            request()->session()->forget('client_name');
-            request()->session()->forget('client_email');
-            request()->session()->forget('client_phone');
-            request()->session()->forget('distributor_name');
-            request()->session()->forget('distributor_phone');
             return response()->json(['data' => true]);
         } else {
-            return response()->json(['data' => false]);
+            return response()->json(['data' => 'Something went wrong, please try again']);
         }
     }
 

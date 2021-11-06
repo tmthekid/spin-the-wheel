@@ -170,6 +170,8 @@
                 const data = await res.json();
                 if(data) {
                     window.location = '/code'
+                } else {
+                    alert('Something went wrong. Please try again.');
                 }
             });
         }
