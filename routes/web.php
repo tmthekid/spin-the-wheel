@@ -12,3 +12,5 @@ Route::post('distributor', [AppController::class, 'saveDistributor'])->name('pos
 Route::get('wheel', [AppController::class, 'getWheel'])->name('get.wheel');
 Route::post('wheel', [AppController::class, 'saveWheel'])->name('post.wheel');
 Route::get('code', [AppController::class, 'getCode'])->name('get.code');
+Route::get('results', [AppController::class, 'getResults'])->name('get.results');
+Route::get('pdf', [AppController::class, 'downloadPDF'])->name('dowload.pdf');

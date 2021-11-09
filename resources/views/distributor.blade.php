@@ -1,6 +1,7 @@
 @extends('layout')
 
 @section('content')
+<div style="background: rgba(255, 255, 255, .7); padding: 3rem; border-radius: 1rem;">
     <h1 class="text-3xl font-semibold">Distributor Details</h1>
     <form class="mt-3" method="POST" action="{{ route('post.distributor') }}">
         @csrf
@@ -18,4 +19,5 @@
         </div>
         <button class="w-1/3 h-9 px-4 rounded-md bg-blue-700 text-sm text-white" type="submit">Save</button>
     </form>
+</div>
 @endsection

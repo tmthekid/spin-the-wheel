@@ -10,4 +10,8 @@ class Code extends Model
     use HasFactory;
 
     protected $fillable = ['code', 'status'];
+
+    public function value(){
+        return $this->belongsTo(Value::class);
+    }
 }

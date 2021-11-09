@@ -6,8 +6,8 @@
 @endsection
 
 @section('content')
-    <div align="center">
-        <table cellpadding="0" cellspacing="0" border="0">
+<div align="center">
+    <table cellpadding="0" cellspacing="0" border="0">
         <tr>
             <td>
                 <div class="power_controls">
@@ -21,6 +21,7 @@
             </td>
         </tr>
     </table>
+</div>
 @endsection
 @section('scripts')
     <script src="{{ asset('js/wheel.js') }}"></script>
